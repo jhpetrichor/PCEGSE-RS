@@ -299,4 +299,5 @@ mod tests {
         let graph = Graph::new_from_file("./data/collins/collins.txt", true);
         pcegs(&graph, 0.4);
     }
+    
 }
