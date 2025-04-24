@@ -1,0 +1,567 @@
+1855 known proteins found in network
+458 reference complexes, 2137 predicted complexes
+ACC = 0.3192
+Fscore = 0.6105
+MMR = 0.3844
+PPV = 0.1387
+Predicted = 0.5035
+Recall = 0.7751
+Sn = 0.7344
+1855 known proteins found in network
+458 reference complexes, 1810 predicted complexes
+ACC = 0.3294
+Fscore = 0.6402
+MMR = 0.3852
+PPV = 0.1482
+Predicted = 0.5591
+Recall = 0.7489
+Sn = 0.7320
+1855 known proteins found in network
+458 reference complexes, 1819 predicted complexes
+ACC = 0.3326
+Fscore = 0.6427
+MMR = 0.3849
+PPV = 0.1532
+Predicted = 0.5569
+Recall = 0.7598
+Sn = 0.7217
+1855 known proteins found in network
+458 reference complexes, 1776 predicted complexes
+ACC = 0.3354
+Fscore = 0.6366
+MMR = 0.3844
+PPV = 0.1595
+Predicted = 0.5501
+Recall = 0.7555
+Sn = 0.7055
+1855 known proteins found in network
+458 reference complexes, 1765 predicted complexes
+ACC = 0.3413
+Fscore = 0.6232
+MMR = 0.3858
+PPV = 0.1648
+Predicted = 0.5314
+Recall = 0.7533
+Sn = 0.7067
+1855 known proteins found in network
+458 reference complexes, 1760 predicted complexes
+ACC = 0.3436
+Fscore = 0.6337
+MMR = 0.3962
+PPV = 0.1675
+Predicted = 0.5369
+Recall = 0.7729
+Sn = 0.7050
+1855 known proteins found in network
+458 reference complexes, 1766 predicted complexes
+ACC = 0.3424
+Fscore = 0.6169
+MMR = 0.3898
+PPV = 0.1693
+Predicted = 0.5266
+Recall = 0.7445
+Sn = 0.6926
+1855 known proteins found in network
+458 reference complexes, 1742 predicted complexes
+ACC = 0.3429
+Fscore = 0.6289
+MMR = 0.4007
+PPV = 0.1728
+Predicted = 0.5333
+Recall = 0.7664
+Sn = 0.6802
+1855 known proteins found in network
+458 reference complexes, 1771 predicted complexes
+ACC = 0.3442
+Fscore = 0.6373
+MMR = 0.4093
+PPV = 0.1755
+Predicted = 0.5443
+Recall = 0.7686
+Sn = 0.6749
+1855 known proteins found in network
+458 reference complexes, 1754 predicted complexes
+ACC = 0.3440
+Fscore = 0.6505
+MMR = 0.4127
+PPV = 0.1777
+Predicted = 0.5593
+Recall = 0.7773
+Sn = 0.6659
+1855 known proteins found in network
+458 reference complexes, 1755 predicted complexes
+ACC = 0.3428
+Fscore = 0.6444
+MMR = 0.4137
+PPV = 0.1790
+Predicted = 0.5470
+Recall = 0.7838
+Sn = 0.6563
+1855 known proteins found in network
+458 reference complexes, 1799 predicted complexes
+ACC = 0.3427
+Fscore = 0.6485
+MMR = 0.4187
+PPV = 0.1810
+Predicted = 0.5509
+Recall = 0.7882
+Sn = 0.6492
+1855 known proteins found in network
+458 reference complexes, 1791 predicted complexes
+ACC = 0.3420
+Fscore = 0.6416
+MMR = 0.4207
+PPV = 0.1826
+Predicted = 0.5399
+Recall = 0.7904
+Sn = 0.6406
+1855 known proteins found in network
+458 reference complexes, 1801 predicted complexes
+ACC = 0.3405
+Fscore = 0.6487
+MMR = 0.4233
+PPV = 0.1829
+Predicted = 0.5480
+Recall = 0.7948
+Sn = 0.6337
+1855 known proteins found in network
+458 reference complexes, 1795 predicted complexes
+ACC = 0.3370
+Fscore = 0.6463
+MMR = 0.4204
+PPV = 0.1829
+Predicted = 0.5499
+Recall = 0.7838
+Sn = 0.6210
+1855 known proteins found in network
+458 reference complexes, 1789 predicted complexes
+ACC = 0.3389
+Fscore = 0.6457
+MMR = 0.4200
+PPV = 0.1835
+Predicted = 0.5511
+Recall = 0.7795
+Sn = 0.6258
+1855 known proteins found in network
+458 reference complexes, 1808 predicted complexes
+ACC = 0.3363
+Fscore = 0.6455
+MMR = 0.4188
+PPV = 0.1840
+Predicted = 0.5498
+Recall = 0.7817
+Sn = 0.6148
+1855 known proteins found in network
+458 reference complexes, 1783 predicted complexes
+ACC = 0.3328
+Fscore = 0.6459
+MMR = 0.4154
+PPV = 0.1840
+Predicted = 0.5524
+Recall = 0.7773
+Sn = 0.6021
+1855 known proteins found in network
+458 reference complexes, 1775 predicted complexes
+ACC = 0.3305
+Fscore = 0.6426
+MMR = 0.4160
+PPV = 0.1851
+Predicted = 0.5499
+Recall = 0.7729
+Sn = 0.5900
+1855 known proteins found in network
+458 reference complexes, 1780 predicted complexes
+ACC = 0.3305
+Fscore = 0.6461
+MMR = 0.4196
+PPV = 0.1859
+Predicted = 0.5517
+Recall = 0.7795
+Sn = 0.5876
+1855 known proteins found in network
+458 reference complexes, 1764 predicted complexes
+ACC = 0.3233
+Fscore = 0.6511
+MMR = 0.4213
+PPV = 0.1862
+Predicted = 0.5601
+Recall = 0.7773
+Sn = 0.5613
+1855 known proteins found in network
+458 reference complexes, 2274 predicted complexes
+ACC = 0.3234
+Fscore = 0.5927
+MMR = 0.3736
+PPV = 0.1412
+Predicted = 0.4815
+Recall = 0.7707
+Sn = 0.7408
+1855 known proteins found in network
+458 reference complexes, 2201 predicted complexes
+ACC = 0.3279
+Fscore = 0.6013
+MMR = 0.3733
+PPV = 0.1451
+Predicted = 0.4984
+Recall = 0.7576
+Sn = 0.7411
+1855 known proteins found in network
+458 reference complexes, 2168 predicted complexes
+ACC = 0.3348
+Fscore = 0.5902
+MMR = 0.3725
+PPV = 0.1525
+Predicted = 0.4843
+Recall = 0.7555
+Sn = 0.7351
+1855 known proteins found in network
+458 reference complexes, 2124 predicted complexes
+ACC = 0.3400
+Fscore = 0.5935
+MMR = 0.3711
+PPV = 0.1603
+Predicted = 0.4896
+Recall = 0.7533
+Sn = 0.7210
+1855 known proteins found in network
+458 reference complexes, 2072 predicted complexes
+ACC = 0.3450
+Fscore = 0.5884
+MMR = 0.3760
+PPV = 0.1651
+Predicted = 0.4836
+Recall = 0.7511
+Sn = 0.7208
+1855 known proteins found in network
+458 reference complexes, 2018 predicted complexes
+ACC = 0.3470
+Fscore = 0.5928
+MMR = 0.3788
+PPV = 0.1678
+Predicted = 0.4851
+Recall = 0.7620
+Sn = 0.7174
+1855 known proteins found in network
+458 reference complexes, 2030 predicted complexes
+ACC = 0.3492
+Fscore = 0.5821
+MMR = 0.3794
+PPV = 0.1726
+Predicted = 0.4778
+Recall = 0.7445
+Sn = 0.7067
+1855 known proteins found in network
+458 reference complexes, 2045 predicted complexes
+ACC = 0.3501
+Fscore = 0.5813
+MMR = 0.3881
+PPV = 0.1759
+Predicted = 0.4724
+Recall = 0.7555
+Sn = 0.6969
+1855 known proteins found in network
+458 reference complexes, 2042 predicted complexes
+ACC = 0.3503
+Fscore = 0.5910
+MMR = 0.3906
+PPV = 0.1791
+Predicted = 0.4853
+Recall = 0.7555
+Sn = 0.6854
+1855 known proteins found in network
+458 reference complexes, 2035 predicted complexes
+ACC = 0.3499
+Fscore = 0.6014
+MMR = 0.3977
+PPV = 0.1805
+Predicted = 0.4948
+Recall = 0.7664
+Sn = 0.6783
+1855 known proteins found in network
+458 reference complexes, 2033 predicted complexes
+ACC = 0.3492
+Fscore = 0.6046
+MMR = 0.3959
+PPV = 0.1826
+Predicted = 0.4983
+Recall = 0.7686
+Sn = 0.6678
+1855 known proteins found in network
+458 reference complexes, 2075 predicted complexes
+ACC = 0.3479
+Fscore = 0.6109
+MMR = 0.4038
+PPV = 0.1839
+Predicted = 0.5060
+Recall = 0.7707
+Sn = 0.6580
+1855 known proteins found in network
+458 reference complexes, 2093 predicted complexes
+ACC = 0.3461
+Fscore = 0.6085
+MMR = 0.4059
+PPV = 0.1843
+Predicted = 0.5026
+Recall = 0.7707
+Sn = 0.6499
+1855 known proteins found in network
+458 reference complexes, 2096 predicted complexes
+ACC = 0.3436
+Fscore = 0.6099
+MMR = 0.4079
+PPV = 0.1847
+Predicted = 0.5010
+Recall = 0.7795
+Sn = 0.6394
+1855 known proteins found in network
+458 reference complexes, 2089 predicted complexes
+ACC = 0.3438
+Fscore = 0.6142
+MMR = 0.4105
+PPV = 0.1845
+Predicted = 0.5041
+Recall = 0.7860
+Sn = 0.6406
+1855 known proteins found in network
+458 reference complexes, 2115 predicted complexes
+ACC = 0.3449
+Fscore = 0.6171
+MMR = 0.4175
+PPV = 0.1856
+Predicted = 0.5035
+Recall = 0.7969
+Sn = 0.6408
+1855 known proteins found in network
+458 reference complexes, 2121 predicted complexes
+ACC = 0.3410
+Fscore = 0.6161
+MMR = 0.4168
+PPV = 0.1858
+Predicted = 0.5031
+Recall = 0.7948
+Sn = 0.6255
+1855 known proteins found in network
+458 reference complexes, 2110 predicted complexes
+ACC = 0.3381
+Fscore = 0.6114
+MMR = 0.4187
+PPV = 0.1861
+Predicted = 0.4976
+Recall = 0.7926
+Sn = 0.6141
+1855 known proteins found in network
+458 reference complexes, 2109 predicted complexes
+ACC = 0.3374
+Fscore = 0.6185
+MMR = 0.4234
+PPV = 0.1869
+Predicted = 0.5045
+Recall = 0.7991
+Sn = 0.6091
+1855 known proteins found in network
+458 reference complexes, 2099 predicted complexes
+ACC = 0.3348
+Fscore = 0.6183
+MMR = 0.4223
+PPV = 0.1865
+Predicted = 0.5060
+Recall = 0.7948
+Sn = 0.6010
+1855 known proteins found in network
+458 reference complexes, 1768 predicted complexes
+ACC = 0.3221
+Fscore = 0.6552
+MMR = 0.4237
+PPV = 0.1848
+Predicted = 0.5617
+Recall = 0.7860
+Sn = 0.5613
+1855 known proteins found in network
+458 reference complexes, 2222 predicted complexes
+ACC = 0.3246
+Fscore = 0.5995
+MMR = 0.3744
+PPV = 0.1423
+Predicted = 0.4923
+Recall = 0.7664
+Sn = 0.7401
+1855 known proteins found in network
+458 reference complexes, 2184 predicted complexes
+ACC = 0.3283
+Fscore = 0.6045
+MMR = 0.3760
+PPV = 0.1458
+Predicted = 0.5009
+Recall = 0.7620
+Sn = 0.7394
+1855 known proteins found in network
+458 reference complexes, 2139 predicted complexes
+ACC = 0.3346
+Fscore = 0.5958
+MMR = 0.3733
+PPV = 0.1532
+Predicted = 0.4928
+Recall = 0.7533
+Sn = 0.7310
+1855 known proteins found in network
+458 reference complexes, 2114 predicted complexes
+ACC = 0.3398
+Fscore = 0.5921
+MMR = 0.3740
+PPV = 0.1597
+Predicted = 0.4886
+Recall = 0.7511
+Sn = 0.7227
+1855 known proteins found in network
+458 reference complexes, 2072 predicted complexes
+ACC = 0.3445
+Fscore = 0.5876
+MMR = 0.3774
+PPV = 0.1652
+Predicted = 0.4826
+Recall = 0.7511
+Sn = 0.7181
+1855 known proteins found in network
+458 reference complexes, 2025 predicted complexes
+ACC = 0.3462
+Fscore = 0.5878
+MMR = 0.3794
+PPV = 0.1673
+Predicted = 0.4751
+Recall = 0.7707
+Sn = 0.7162
+1855 known proteins found in network
+458 reference complexes, 1999 predicted complexes
+ACC = 0.3482
+Fscore = 0.5893
+MMR = 0.3817
+PPV = 0.1720
+Predicted = 0.4857
+Recall = 0.7489
+Sn = 0.7045
+1855 known proteins found in network
+458 reference complexes, 2012 predicted complexes
+ACC = 0.3502
+Fscore = 0.5911
+MMR = 0.3879
+PPV = 0.1766
+Predicted = 0.4846
+Recall = 0.7576
+Sn = 0.6947
+1855 known proteins found in network
+458 reference complexes, 1994 predicted complexes
+ACC = 0.3501
+Fscore = 0.5983
+MMR = 0.3952
+PPV = 0.1794
+Predicted = 0.4925
+Recall = 0.7620
+Sn = 0.6831
+1855 known proteins found in network
+458 reference complexes, 1995 predicted complexes
+ACC = 0.3505
+Fscore = 0.5980
+MMR = 0.3927
+PPV = 0.1813
+Predicted = 0.4912
+Recall = 0.7642
+Sn = 0.6778
+1855 known proteins found in network
+458 reference complexes, 2036 predicted complexes
+ACC = 0.3496
+Fscore = 0.6040
+MMR = 0.3973
+PPV = 0.1833
+Predicted = 0.4975
+Recall = 0.7686
+Sn = 0.6668
+1855 known proteins found in network
+458 reference complexes, 2080 predicted complexes
+ACC = 0.3479
+Fscore = 0.6048
+MMR = 0.4007
+PPV = 0.1838
+Predicted = 0.4976
+Recall = 0.7707
+Sn = 0.6587
+1855 known proteins found in network
+458 reference complexes, 2059 predicted complexes
+ACC = 0.3448
+Fscore = 0.6148
+MMR = 0.4063
+PPV = 0.1837
+Predicted = 0.5104
+Recall = 0.7729
+Sn = 0.6473
+1855 known proteins found in network
+458 reference complexes, 2097 predicted complexes
+ACC = 0.3449
+Fscore = 0.6204
+MMR = 0.4157
+PPV = 0.1839
+Predicted = 0.5088
+Recall = 0.7948
+Sn = 0.6468
+1855 known proteins found in network
+458 reference complexes, 2072 predicted complexes
+ACC = 0.3438
+Fscore = 0.6215
+MMR = 0.4155
+PPV = 0.1840
+Predicted = 0.5111
+Recall = 0.7926
+Sn = 0.6425
+1855 known proteins found in network
+458 reference complexes, 2128 predicted complexes
+ACC = 0.3416
+Fscore = 0.6115
+MMR = 0.4167
+PPV = 0.1848
+Predicted = 0.4986
+Recall = 0.7904
+Sn = 0.6315
+1855 known proteins found in network
+458 reference complexes, 2101 predicted complexes
+ACC = 0.3413
+Fscore = 0.6160
+MMR = 0.4201
+PPV = 0.1861
+Predicted = 0.5002
+Recall = 0.8013
+Sn = 0.6260
+1855 known proteins found in network
+458 reference complexes, 2112 predicted complexes
+ACC = 0.3373
+Fscore = 0.6138
+MMR = 0.4182
+PPV = 0.1860
+Predicted = 0.4991
+Recall = 0.7969
+Sn = 0.6117
+1855 known proteins found in network
+458 reference complexes, 2111 predicted complexes
+ACC = 0.3366
+Fscore = 0.6154
+MMR = 0.4211
+PPV = 0.1864
+Predicted = 0.5012
+Recall = 0.7969
+Sn = 0.6079
+1855 known proteins found in network
+458 reference complexes, 2108 predicted complexes
+ACC = 0.3340
+Fscore = 0.6135
+MMR = 0.4229
+PPV = 0.1863
+Predicted = 0.5005
+Recall = 0.7926
+Sn = 0.5990
+1855 known proteins found in network
+458 reference complexes, 1774 predicted complexes
+ACC = 0.3216
+Fscore = 0.6508
+MMR = 0.4201
+PPV = 0.1842
+Predicted = 0.5586
+Recall = 0.7795
+Sn = 0.5616
