@@ -5,7 +5,7 @@ use essential_protein::{
 };
 
 fn main() {
-    let graph = Graph::new_from_file("./data/krogan_core/krogan_core.txt", true);
+    let graph = Graph::new_from_file("./data/krogan_core/krogan_core.txt", false);
     // 动态网络
     let dpins = get_dpins(&graph);
 
@@ -13,7 +13,7 @@ fn main() {
     for mut dp in dpins.into_iter() {
         // weight_by_dag(&mut dp);
         weight_by_dag_topo(&mut dp, 0.5);
-        let res = pcegs::pcegs_essential(&dp, 0.4);
+        let res = pcegs::pcegs(&dp, 0.4);
         // res.into_iter().for_each(|c| println!("{}", c));
         complexes.extend(res);
     }
@@ -49,9 +49,9 @@ fn write_file(file: String, complexes: Vec<Complex<String>>) {
     let mut file = File::create(file).expect("Failed to crate faile!");
     // file.write_all(buf)
     for complex in complexes {
-        // if complex.cohesion.le(&0.5) {
-        //     continue;
-        // }
+        if complex.cohesion.le(&0.2) {
+            continue;
+        }
         let mut str = format!(
             "{} {:.4}",
             complex

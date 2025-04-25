@@ -141,7 +141,7 @@ class MatchApplication(object):
         print >>sys.stderr, msg
 
     def read_complexes(self, fname, known_proteins=None, strictness=0.5,
-                       min_size=3, max_size=20,min_num=0,max_num=20):
+                       min_size=3, max_size=25,min_num=3,max_num=25):
         result = []
         for line in open(fname):
             ps = set(canonical_protein_name(x) for x in line.strip().split() if x)

@@ -12,12 +12,14 @@ pub const COMPLEX_REF: &str = "./data/complex.txt";
 
 pub const OVERLAP_SCORE: f64 = 0.6;
 
-const MAX_SIZE: usize = 20;
-const MIN_SIZE: usize = 3;
+pub const MAX_SIZE: usize = 20;
+pub const MIN_SIZE: usize = 3;
 
 #[derive(Debug, Clone)]
 pub struct Complex<T> {
+    // 复合物成员
     pub proteins: Vec<T>,
+    // 内聚力
     pub cohesion: f64,
 }
 
@@ -27,6 +29,10 @@ where
 {
     pub fn new(proteins: Vec<T>, cohesion: f64) -> Self {
         Self { proteins, cohesion }
+    }
+
+    pub fn len(&self) -> usize {
+        self.proteins.len()
     }
 
     pub fn overlap_score(&self, other: &Self) -> (f64, f64) {
@@ -43,6 +49,7 @@ where
         (comsize, os)
     }
 
+    // 重叠程度
     pub fn is_overlapped(&self, other: &Self) -> bool {
         let set_self: HashSet<_> = self.proteins.iter().collect();
         let set_other: HashSet<_> = other.proteins.iter().collect();
@@ -73,6 +80,7 @@ where
 }
 
 impl Graph {
+    // 计算给定一个簇的内聚力
     pub fn calculate_cohesion(&self, cluster: &Vec<usize>) -> f64 {
         let mut cohesion = 0.;
 
@@ -92,6 +100,7 @@ impl Graph {
     }
 }
 
+// 根据内聚力更新结果
 pub fn update_by_cohesion<T>(mut complexes: Vec<Complex<T>>) -> Vec<Complex<T>>
 where
     T: Eq + Hash + Clone + Ord,
@@ -114,15 +123,14 @@ where
             res.push(c);
         }
     });
-    // res
-    // 进保留前二分之一
-    res[0..res.len() / 2]
+
+    res[0..(res.len() as f64 / 2.5) as usize]
         .into_iter()
         .map(|c| c.clone())
         .collect::<Vec<Complex<T>>>()
 }
 
-// !!!! not stable
+// !!!! Does not stable
 pub fn confucion_matrix<T>(refc: Vec<Complex<T>>, prec: Vec<Complex<T>>)
 where
     T: Eq + Hash + Clone + Ord,

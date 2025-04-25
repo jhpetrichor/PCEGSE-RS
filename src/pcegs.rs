@@ -1,9 +1,9 @@
 use std::collections::{HashMap, HashSet};
 
-use ndarray_rand::rand::random;
-
 use crate::{
-    eva::{update_by_cohesion, Complex}, gene_expression::read_essential_protein, graph::Graph
+    eva::{update_by_cohesion, Complex},
+    gene_expression::read_essential_protein,
+    graph::Graph,
 };
 
 impl Graph {
@@ -189,7 +189,10 @@ pub fn pcegs_essential(graph: &Graph, bate: f64) -> Vec<Complex<String>> {
     let mut visited = HashSet::<usize>::new();
 
     let eps = read_essential_protein();
-    let eps = (0..graph.id_protein.len() - 1).into_iter().filter(|i| eps.contains(&graph.id_protein[*i])).collect::<HashSet<_>>();
+    let eps = (0..graph.id_protein.len() - 1)
+        .into_iter()
+        .filter(|i| eps.contains(&graph.id_protein[*i]))
+        .collect::<HashSet<_>>();
 
     let mut complexes = Vec::new();
     for seed in seeds {
@@ -197,7 +200,13 @@ pub fn pcegs_essential(graph: &Graph, bate: f64) -> Vec<Complex<String>> {
             continue;
         }
         // 核心
-        let mut core = graph.nei_list[seed].keys().map(|a| a.clone()).collect::<HashSet<_>>().intersection(&eps).map(|a| a.clone()).collect::<HashSet<_>>();
+        let mut core = graph.nei_list[seed]
+            .keys()
+            .map(|a| a.clone())
+            .collect::<HashSet<_>>()
+            .intersection(&eps)
+            .map(|a| a.clone())
+            .collect::<HashSet<_>>();
 
         // 候选附属,即核心对应的邻居
         let mut all_neis = HashSet::<usize>::new();
@@ -265,7 +274,6 @@ pub fn pcegs_essential(graph: &Graph, bate: f64) -> Vec<Complex<String>> {
         .collect::<Vec<_>>()
 }
 
-
 #[cfg(test)]
 mod tests {
     use crate::graph::Graph;
@@ -299,5 +307,4 @@ mod tests {
         let graph = Graph::new_from_file("./data/collins/collins.txt", true);
         pcegs(&graph, 0.4);
     }
-    
 }

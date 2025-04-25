@@ -7,11 +7,14 @@ use std::{
 use crate::graph::Graph;
 
 pub struct GeneExpress {
+    // 蛋白质的基因表达谱
     pub(crate) express: HashMap<String, Vec<f64>>,
+    // 表达谱对应的均值和方差
     pub(crate) mean_variance: HashMap<String, (f64, f64)>,
 }
 
 impl GeneExpress {
+    // 读取蛋白质的基因表达谱而非所有
     pub fn new(file: &str, proteins: &HashSet<String>) -> Self {
         let express = read_gene_expression(file, proteins);
         let mean_variance = express
@@ -21,7 +24,6 @@ impl GeneExpress {
                 (a.to_string(), res)
             })
             .collect::<HashMap<_, _>>();
-        let eps = read_essential_protein();
 
         Self {
             express,
@@ -29,7 +31,7 @@ impl GeneExpress {
         }
     }
 
-    //
+    // EDPIN，为关键蛋白质和非关键蛋白质设置不同的基因活性阈值
     pub fn calculate_active_threshold(&self, eps: &HashSet<String>) -> HashMap<String, f64> {
         let mut threshold = HashMap::<String, f64>::new();
 
@@ -46,7 +48,7 @@ impl GeneExpress {
         threshold
     }
 
-    pub fn count(&self) -> usize {
+    fn count(&self) -> usize {
         let mut count = 0;
         for i in self.express.iter() {
             count = i.1.len();
@@ -57,10 +59,7 @@ impl GeneExpress {
 }
 
 pub fn get_dpins(g: &Graph) -> Vec<Graph> {
-    // 蛋白质
     let proteins = g.id_protein.iter().map(|c| c.to_string()).collect();
-    // 关键蛋白质
-
     let gep = GeneExpress::new("./data/gene-expression.txt", &proteins);
     let eps = read_essential_protein();
     // 计算蛋白质的活跃值
@@ -117,6 +116,7 @@ fn read_gene_expression(file: &str, eps: &HashSet<String>) -> HashMap<String, Ve
     protein_express
 }
 
+// 计算均值和方差
 fn get_mean_variance(data: &[f64]) -> (f64, f64) {
     assert!(data.len() != 0);
 

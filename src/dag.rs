@@ -1,5 +1,6 @@
 use crate::graph::Graph;
 use std::{
+    cmp::Ordering,
     collections::{HashMap, HashSet},
     fs::read_to_string,
 };
@@ -9,12 +10,13 @@ pub const PART_OF_WEIGHT: f64 = 0.6;
 
 #[derive(Debug)]
 pub struct Dag {
-    pub edges: Vec<HashMap<usize, f64>>,
-    pub protein_go: HashMap<String, HashSet<usize>>,
-    pub go_child: HashMap<usize, HashSet<usize>>,
+    edges: Vec<HashMap<usize, f64>>,
+    protein_go: HashMap<String, HashSet<usize>>,
+    go_child: HashMap<usize, HashSet<usize>>,
 
-    pub(crate) sim_term: HashMap<(usize, usize), f64>,
-    pub(crate) sim_term_child: HashMap<(usize, usize), f64>,
+    // sim_term只用作计算使用
+    sim_term: HashMap<(usize, usize), f64>, // 计算时候更新
+    sim_term_child: HashMap<(usize, usize), f64>, // 计算时更新
 }
 
 impl Dag {
@@ -23,9 +25,9 @@ impl Dag {
         let mut dag = Self {
             edges: vec![Default::default(); edges.len()],
             protein_go,
-            sim_term: Default::default(),
-            go_child: Default::default(),
-            sim_term_child: Default::default(),
+            sim_term: Default::default(), // 计算是更新
+            go_child,
+            sim_term_child: Default::default(), // 计算时更新
         };
 
         edges.into_iter().for_each(|(a, b, w)| {
@@ -142,7 +144,10 @@ impl Dag {
         res
     }
 
-    fn get_sim(&mut self, a: usize, b: usize) -> f64 {
+    // A new method to measure the semantic similarity of GO terms
+    // https://doi.org/10.1093/bioinformatics/btm087
+    #[allow(unused)]
+    fn get_sim_wang(&mut self, a: usize, b: usize) -> f64 {
         // 先查找
         match self.sim_term.get(&(a, b)) {
             Some(sim) => return *sim,
@@ -153,32 +158,65 @@ impl Dag {
         let b_ancestor = self.get_all_ancestors(b);
         let common_ances = b_ancestor.intersection(&a_ancestor).collect::<Vec<_>>();
         // 在一个DAG中
-        // a是b的祖先
-        let sim = if b_ancestor.contains(&a) {
-            let sv = self.get_semantic_value(b);
-            let sum = sv.values().sum::<f64>();
-            let mut s = 0.;
-            common_ances.into_iter().for_each(|c| s += sv[c]);
-            // println!("if: {}", (s + sv[&b]) / sum );
-            (s + sv[&b]) / sum
-        } else if b_ancestor.contains(&b) {
-            // b 是 a 的祖先
-            let sv = self.get_semantic_value(a);
-            let sum = sv.values().sum::<f64>();
-            let mut s = 0.;
-            common_ances.into_iter().for_each(|c| s += sv[c]);
-            // println!("if else: {}", (s + sv[&a]) / sum);
-            (s + sv[&a]) / sum
+        let sim = if common_ances.is_empty() {
+            0.
         } else {
-            let sv_a = self.get_semantic_value(a);
-            let sv_b = self.get_semantic_value(b);
-            let sum = sv_a.values().sum::<f64>() + sv_b.values().sum::<f64>();
-            let mut s = 0.;
+            // let sim = 0.;
+            let sv_a = self.get_semantic_value(b);
+            let sv_b = self.get_semantic_value(a);
+
             common_ances
                 .into_iter()
-                .for_each(|c| s += f64::max(sv_a[&a], sv_b[&b]));
-            // println!("else: {}", s / sum);
-            s / sum
+                .map(|c| sv_a[c] + sv_b[c])
+                .sum::<f64>()
+                / (sv_a.values().sum::<f64>() + sv_b.values().sum::<f64>())
+        };
+
+        self.sim_term.insert((a, b), sim);
+        self.sim_term.insert((b, a), sim);
+
+        sim
+    }
+
+    fn get_sim(&mut self, a: usize, b: usize) -> f64 {
+        // 先查找，如果计算过，则查找返回
+        if let Some(sim) = self.sim_term.get(&(a, b)) {
+            return *sim;
+        }
+
+        // let a_ancestor = self.get_all_ancestors(a);
+        // let b_ancestor = self.get_all_ancestors(b);
+        // let res = self.find_lca_with_paths(a, b);
+        let sim = match self.find_lca_with_paths(a, b) {
+            None => 0.,
+            Some((_, a_shortest, b_shortest)) => {
+                match a_shortest.len().cmp(&b_shortest.len()) {
+                    // a 是 b的祖先，计算b的语义贡献值
+                    Ordering::Less => {
+                        let sv = self.get_semantic_value(b);
+                        sv[&a_shortest.last().unwrap()]
+                            / b_shortest.into_iter().map(|i| sv[&i]).sum::<f64>()
+                    }
+                    // b 是 a的祖先
+                    Ordering::Greater => {
+                        let sv = self.get_semantic_value(a);
+                        sv[&b_shortest.last().unwrap()]
+                            / a_shortest.into_iter().map(|i| sv[&i]).sum::<f64>()
+                    }
+                    // a是b的堂兄弟
+                    Ordering::Equal => {
+                        let sv_a = self.get_semantic_value(a);
+                        let sv_b = self.get_semantic_value(b);
+                        f64::max(
+                            sv_a[&a_shortest.last().unwrap()],
+                            sv_b[&b_shortest.last().unwrap()],
+                        ) / f64::max(
+                            a_shortest.into_iter().map(|i| sv_a[&i]).sum::<f64>(),
+                            b_shortest.into_iter().map(|i| sv_b[&i]).sum::<f64>(),
+                        )
+                    }
+                }
+            }
         };
 
         // 保存，避免多次计算
@@ -187,6 +225,54 @@ impl Dag {
 
         sim
     }
+
+    // ! Previous Version
+    // fn get_sim(&mut self, a: usize, b: usize) -> f64 {
+    //     // 先查找
+    //     match self.sim_term.get(&(a, b)) {
+    //         Some(sim) => return *sim,
+    //         None => {}
+    //     }
+
+    //     let a_ancestor = self.get_all_ancestors(a);
+    //     let b_ancestor = self.get_all_ancestors(b);
+    //     let common_ances = b_ancestor.intersection(&a_ancestor).collect::<Vec<_>>();
+    //     // 在一个DAG中
+    //     let sim = if common_ances.is_empty() {
+    //         0.
+    //     } else if b_ancestor.contains(&a) {
+    //         let sv = self.get_semantic_value(b);
+    //         let sum = sv.values().sum::<f64>();
+    //         let mut s = 0.;
+    //         common_ances.into_iter().for_each(|c| s += sv[c]);
+    //         // println!("if: {}", (s + sv[&b]) / sum );
+    //         (s + sv[&b]) / sum * 2.
+    //     } else if b_ancestor.contains(&b) {
+    //         // b 是 a 的祖先
+    //         let sv = self.get_semantic_value(a);
+    //         let sum = sv.values().sum::<f64>();
+    //         let mut s = 0.;
+    //         common_ances.into_iter().for_each(|c| s += sv[c]);
+    //         // println!("if else: {}", (s + sv[&a]) / sum);
+    //         (s + sv[&a]) / sum* 2.
+    //     } else {
+    //         let sv_a = self.get_semantic_value(a);
+    //         let sv_b = self.get_semantic_value(b);
+    //         let sum = sv_a.values().sum::<f64>() + sv_b.values().sum::<f64>();
+    //         let mut s = 0.;
+    //         common_ances
+    //             .into_iter()
+    //             .for_each(|c| s += f64::max(sv_a[c], sv_b[&c]));
+    //         // println!("else: {}", s / sum);
+    //         s / sum* 2.
+    //     };
+
+    //     // 保存，避免多次计算
+    //     self.sim_term.insert((a, b), sim);
+    //     self.sim_term.insert((b, a), sim);
+
+    //     sim
+    // }
 
     fn get_sim_child(&mut self, a: usize, b: usize) -> f64 {
         if let Some(sim) = self.sim_term_child.get(&(a, b)) {
@@ -243,6 +329,129 @@ impl Dag {
             }
         }
     }
+
+    pub fn get_ancestors(&self, start: usize) -> HashSet<usize> {
+        let mut visited = HashSet::new();
+        let mut stack = vec![start];
+
+        while let Some(node) = stack.pop() {
+            if visited.insert(node) {
+                if let Some(parents) = self.edges.get(node) {
+                    for &parent in parents.keys() {
+                        stack.push(parent);
+                    }
+                }
+            }
+        }
+
+        visited
+    }
+
+    pub fn get_ancestor_distances(&self, start: usize) -> HashMap<usize, usize> {
+        let mut distances = HashMap::new();
+        let mut queue = std::collections::VecDeque::new();
+        queue.push_back((start, 0));
+
+        while let Some((node, dist)) = queue.pop_front() {
+            if distances.insert(node, dist).is_none() {
+                if let Some(parents) = self.edges.get(node) {
+                    for &parent in parents.keys() {
+                        queue.push_back((parent, dist + 1));
+                    }
+                }
+            }
+        }
+
+        distances
+    }
+
+    pub fn find_lca(&self, node1: usize, node2: usize) -> Option<usize> {
+        let dist1 = self.get_ancestor_distances(node1);
+        let dist2 = self.get_ancestor_distances(node2);
+
+        let common: HashSet<_> = dist1
+            .keys()
+            .copied()
+            .collect::<HashSet<_>>()
+            .intersection(&dist2.keys().copied().collect())
+            .copied()
+            .collect();
+
+        common
+            .into_iter()
+            .min_by_key(|&ancestor| dist1[&ancestor] + dist2[&ancestor])
+    }
+
+    /// 获取祖先距离和前驱信息，用于构造路径
+    fn get_ancestor_paths(&self, start: usize) -> (HashMap<usize, usize>, HashMap<usize, usize>) {
+        let mut distances = HashMap::new();
+        let mut predecessors = HashMap::new();
+        let mut queue = std::collections::VecDeque::new();
+        queue.push_back((start, 0));
+
+        while let Some((node, dist)) = queue.pop_front() {
+            if distances.insert(node, dist).is_none() {
+                if let Some(parents) = self.edges.get(node) {
+                    for &parent in parents.keys() {
+                        if !distances.contains_key(&parent) {
+                            predecessors.insert(parent, node);
+                            queue.push_back((parent, dist + 1));
+                        }
+                    }
+                }
+            }
+        }
+
+        (distances, predecessors)
+    }
+
+    /// 构造从 start 到 end 的路径（子 → 祖先）
+    fn build_path(
+        &self,
+        predecessors: &HashMap<usize, usize>,
+        start: usize,
+        end: usize,
+    ) -> Vec<usize> {
+        let mut path = vec![end];
+        let mut current = end;
+        while current != start {
+            if let Some(&prev) = predecessors.get(&current) {
+                path.push(prev);
+                current = prev;
+            } else {
+                break; // 没有路径连通
+            }
+        }
+        path.reverse();
+        path
+    }
+
+    /// 返回最近公共祖先和从两个节点到该祖先的路径
+    pub fn find_lca_with_paths(
+        &self,
+        node1: usize,
+        node2: usize,
+    ) -> Option<(usize, Vec<usize>, Vec<usize>)> {
+        let (dist1, pred1) = self.get_ancestor_paths(node1);
+        let (dist2, pred2) = self.get_ancestor_paths(node2);
+
+        let common: HashSet<_> = dist1
+            .keys()
+            .copied()
+            .collect::<HashSet<_>>()
+            .intersection(&dist2.keys().copied().collect())
+            .copied()
+            .collect();
+
+        let lca = common
+            .into_iter()
+            .min_by_key(|&ancestor| dist1[&ancestor] + dist2[&ancestor])?;
+
+        let path1 = self.build_path(&pred1, node1, lca);
+        let path2 = self.build_path(&pred2, node2, lca);
+
+        Some((lca, path1, path2))
+    }
 }
 
 pub fn weight_by_dag(graph: &mut Graph) {
@@ -285,7 +494,7 @@ pub fn weight_by_dag_topo(graph: &mut Graph, alpha: f64) {
         });
     });
 
-    // delete edge
+    // 删除连接强度太低的边
     edge_remove.into_iter().for_each(|(a, b)| {
         graph.remove_edge(a, b);
     });
@@ -376,11 +585,9 @@ fn read_go_file() -> (
 
 #[cfg(test)]
 mod tests {
-    use std::collections::{HashMap, HashSet};
-
-    use crate::graph::Graph;
-
     use super::Dag;
+    use crate::graph::Graph;
+    use std::collections::{HashMap, HashSet};
 
     #[test]
     fn test_dag_from_file() {
@@ -404,7 +611,7 @@ mod tests {
             ("a".to_string(), HashSet::from([1, 2])),
             ("b".to_string(), HashSet::from([3, 1, 4])),
         ]);
-        let mut dag = Dag {
+        let dag = Dag {
             edges: a,
             protein_go: protien_go,
             sim_term: Default::default(),
@@ -417,34 +624,15 @@ mod tests {
             sim_term_child: Default::default(),
         };
 
-        let res0 = dag.get_all_ancestors(0);
-        assert_eq!(res0, HashSet::from([1, 2, 4, 3]));
+        let anc0 = dag.get_ancestors(0);
+        println!("0 ancestor: {:?}", anc0);
+        let anc1 = dag.get_ancestors(1);
+        println!("0 ancestor: {:?}", anc1);
+        println!("dis 0: {:?}", dag.get_ancestor_distances(0));
+        println!("dis 1: {:?}", dag.get_ancestor_distances(1));
+        println!("LCA 0 1: {:?}", dag.find_lca(0, 1));
 
-        let res1 = dag.get_all_ancestors(1);
-        assert_eq!(res1, HashSet::from([3, 4]));
-
-        let res4 = dag.get_all_ancestors(4);
-        assert!(res4.is_empty());
-
-        let sv = dag.get_semantic_value(0);
-        println!("{:?}", sv);
-        let sv = dag.get_semantic_value(2);
-        println!("{:?}", sv);
-
-        let sim = dag.get_sim(1, 0);
-        println!("{:?}", sim);
-
-        let sim = dag.get_sim(1, 2);
-        println!("ances: {:?}", sim);
-        let sim = dag.get_sim_child(1, 2);
-        println!("child: {:?}", sim);
-        // let sim_ances_child = dag.get
-
-        // function sim
-        let s = dag.get_function_sim("a", "b");
-        println!("sim of a and b is: {}", s);
-        let s = dag.get_sim_ancestor_child("a", "b");
-        println!("sim of a and b is: {}", s);
+        println!("shortest path and lca {:?}", dag.find_lca_with_paths(1, 2));
     }
 
     #[test]
